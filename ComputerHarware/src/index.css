@@ -192,6 +192,10 @@ body {
     display: none;
 }
 
+hide {
+    display: none;
+}
+
 .quiz {
     display: flex;
 }

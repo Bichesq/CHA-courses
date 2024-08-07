@@ -1,10 +1,11 @@
 import QuestionSlide from '../components/QuestionSlide'
 import Section from '../components/Section'
-import { useSlideContext } from '../contexts/slidesContext'
+import { useOutletContext } from 'react-router-dom';
+
 
 const isDone = false;
 const KnowledgeCheck = () => {
-    const {question} = useSlideContext();
+    const { question } = useOutletContext();
     return (
         <div>
             <QuestionSlide {...question} />

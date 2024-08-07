@@ -11,7 +11,7 @@ const ContentImage = ({imageName}) => {
     return (
         <>
             <div id="slide1" className="carousel-item active" data-index={1}>
-                <img src={imagePath} className="d-block w-100" alt={imageName} />
+                <img src={imagePath} className="d-block w-100" alt={`image ${imageName}`} />
                 {/* <Image src={imagePath} /> */}
             </div>  
         </>

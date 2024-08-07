@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Section from './Section'
 import ContentImage from './ContentImage'
-import {useSlideContext} from '../contexts/slidesContext'
+import { useOutletContext } from 'react-router-dom'
 
 
 
 const Content = () => {
-    const {slide} = useSlideContext();
+    const { slide } = useOutletContext();
    
     return (
         <>
@@ -29,7 +29,7 @@ const Content = () => {
                         className="overflow-auto"
                         style={{ height: "calc(100vh - 140px)" }}
                         >
-                        <Section content={ slide.section } />
+                        <Section content={slide.section } />
                     </div>
                 </div>
             </div>
