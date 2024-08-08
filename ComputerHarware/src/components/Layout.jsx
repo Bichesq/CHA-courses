@@ -5,13 +5,14 @@ import Header from './Header'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { slides, knowledgeCheckData } from '../data/data'
 import { Navigate } from 'react-router-dom'
+import Image from 'react-bootstrap/Image';
+import logo from '../assets/images/logo.png'
 
 
 let sIndex = 0;
 let qIndex = 0;
 let isLearn = true;
 let learnStatus = 'active';
-let progressCover = 0;
 
 
 const Layout = () => {
@@ -79,28 +80,27 @@ const Layout = () => {
     
     return (
         <>
-                
-                    <Header />
-                    <div className="full-screen">
-                        <div className="row">
-                            <div className="col-8">
-                                <h1 id="title">Understanding Computer Hardware: A Beginner's Guide</h1>
-                            </div>
-                            <div className="col-4">
-                                <ul className="nav nav-tabs">
-                                <li className="nav-item" >
-                                    <a id="learn" className={`nav-link ${learnStatus}`} onClick={handleClickContent}>Learning Material</a>
-                                </li>
-                                <li className="nav-item" onClick={handleClickQuiz}>
-                                    <a id="quiz" className={`nav-link ${quizStatus}`}>Knowledge Check</a>
-                                </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <Outlet context={{slide, setSlide, question, setQuestion}} />
-                        <Controls onNext={ handleNextSlide} onPrev={handlePrevSlide} progress={progress} />
+            <div className="full-screen">
+                <div className="row">
+                    <div className="col-8 d-flex">
+                        <a href='/learn'><Image href='/learn' src={logo} width="35" height="35" rounded className='me-3' /></a>         
+                        <h1 id="title">Understanding Computer Hardware: A Beginner's Guide</h1>
                     </div>
+                    <div className="col-4">
+                        <ul className="nav nav-tabs">
+                        <li className="nav-item" >
+                            <a id="learn" className={`nav-link ${learnStatus}`} onClick={handleClickContent}>Learning Material</a>
+                        </li>
+                        <li className="nav-item" onClick={handleClickQuiz}>
+                            <a id="quiz" className={`nav-link ${quizStatus}`}>Knowledge Check</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <Outlet context={{slide, setSlide, question, setQuestion}} />
+                <Controls onNext={ handleNextSlide} onPrev={handlePrevSlide} progress={progress} />
+            </div>
                 
         </>
     )
