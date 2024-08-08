@@ -1,8 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Controls = ({onNext}) => {
-
-    
+const Controls = ({ onNext, onPrev, progress }) => {
 
     return (
         <>
@@ -17,9 +15,10 @@ const Controls = ({onNext}) => {
                     <button
                         id="prev"
                         type="button"
-                        className="btn btn-primary btn-md disabled me-1"
+                        className="btn btn-primary btn-md disable me-1"
                         data-bs-target="#carouselExampleIndicators"
                         data-bs-slide="prev" 
+                        onClick={onPrev}
                         >
                         <i className="fa-solid fa-arrow-left" />
                     </button>
@@ -50,9 +49,9 @@ const Controls = ({onNext}) => {
                         id="progress"
                         className="progress-bar bg-success"
                         role="progressbar"
-                        style={{ width: "5%" }}
+                        style={{ width: `${progress}%` }}
                         >
-                        0%
+                        {progress}%
                     </div>
                 </div>
             </div> 

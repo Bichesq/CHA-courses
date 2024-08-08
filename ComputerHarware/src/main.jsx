@@ -21,9 +21,9 @@ const router = createBrowserRouter([
       element: <KnowledgeCheck />
     },
     {
-        path: '/learn',
+      index:true,
       element: <LearningMaterial />,
-        index:true
+      path: '/learn'
     }
     ]
   },

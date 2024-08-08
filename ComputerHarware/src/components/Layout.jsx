@@ -10,42 +10,73 @@ import { Navigate } from 'react-router-dom'
 let sIndex = 0;
 let qIndex = 0;
 let isLearn = true;
-let status = 'disabled'
+let learnStatus = 'active';
+let progressCover = 0;
 
 
 const Layout = () => {
     const [slide, setSlide] = useState(slides[0]);
     const [question, setQuestion] = useState(knowledgeCheckData[0]);
+    const [progress, setProgress] = useState(0);
     const [isContent, setIsContent] = useState(isLearn);
-    const [slideStatus, setSlideStatus] = useState(status);
+    const [quizStatus, setquizStatus] = useState('disable');
     const [slideIndex, setSlideIndex] = useState(0);
     const [questionIndex, setQuestionIndex] = useState(0)
+
+
+
     const navigate = useNavigate();
-    console.log(slideStatus)
-    console.log(qIndex + ' and ' + (knowledgeCheckData.length -2))
-    
+    console.log('qIndex: ' + qIndex)
+    console.log('No of slides: ' + (knowledgeCheckData.length-2))
+    // console.log(progress)
     const handleNextSlide = () => {
         if (sIndex <  (slides.length-1) && isLearn) {
-            setSlideIndex(() => sIndex++); 
+            setSlideIndex(++sIndex ); 
             setSlide(slides[sIndex]);
-        } else if (qIndex < (knowledgeCheckData.length - 2) && !isLearn) {
-            setQuestionIndex(() => qIndex++);
+            setProgress(Math.ceil(sIndex/(slides.length-1)*100))
+            
+        } else if (qIndex < (knowledgeCheckData.length - 2) && !isContent) {
+            setQuestionIndex(++qIndex);
             setQuestion(knowledgeCheckData[qIndex]);
+            setProgress(Math.ceil(qIndex/(knowledgeCheckData.length-2)*100))
+        }        
+    }
+
+    const handlePrevSlide = () => {
+        if (sIndex > 0 && isLearn) {
+            setSlideIndex(--sIndex ); 
+            setSlide(slides[sIndex]);
+            setProgress(Math.ceil(sIndex/(slides.length-1)*100))
+            
+        } else if (qIndex > 0 && !isLearn) {
+            setQuestionIndex(--qIndex);
+            setQuestion(knowledgeCheckData[qIndex]);
+            setProgress(Math.ceil(qIndex/(knowledgeCheckData.length-2)*100))
         }        
     }
 
     const handleClickQuiz = () => {
         navigate('/questions');
-        setIsContent(() => !isLearn)
+        setIsContent(!isLearn);
+        isLearn = false;
+        setProgress(0);
+        setquizStatus('active');
+        learnStatus = ''
     }
 
-    useEffect(() => {
-        if (qIndex = (knowledgeCheckData.length - 2)){
-            setIsContent(() => !isLearn);
-            // setSlideStatus((ss) => 'active');
-        }
-    }, [qIndex])
+    const handleClickContent = () => {
+        navigate('/learn');
+        setIsContent(isLearn);
+        isLearn = true;
+        setProgress(0);
+        learnStatus = 'active';
+        setquizStatus('');
+        
 
+        
+    }
+
+    
     return (
         <>
                 
@@ -57,18 +88,18 @@ const Layout = () => {
                             </div>
                             <div className="col-4">
                                 <ul className="nav nav-tabs">
-                                <li className="nav-item">
-                                    <a id="learn" className="nav-link active">Learning Material</a>
+                                <li className="nav-item" >
+                                    <a id="learn" className={`nav-link ${learnStatus}`} onClick={handleClickContent}>Learning Material</a>
                                 </li>
                                 <li className="nav-item" onClick={handleClickQuiz}>
-                                    <a id="quiz" className={`nav-link ${slideStatus}`}>Knowledge Check</a>
+                                    <a id="quiz" className={`nav-link ${quizStatus}`}>Knowledge Check</a>
                                 </li>
                                 </ul>
                             </div>
                         </div>
                         
-                <Outlet context={{slide, setSlide, question, setQuestion}} />
-                        <Controls onNext={ handleNextSlide} />
+                        <Outlet context={{slide, setSlide, question, setQuestion}} />
+                        <Controls onNext={ handleNextSlide} onPrev={handlePrevSlide} progress={progress} />
                     </div>
                 
         </>
